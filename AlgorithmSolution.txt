@@ -1,0 +1,133 @@
+import java.util.*;
+
+class Solution {
+    public Set<Set<Integer>> getSubSets(Set<Integer> A) {
+        Set<Set<Integer>> subsets = new Set<>();
+        subsets.add(new Set<>());
+        subsets.add(new Set<>());
+
+        Object[] elementsArray = A.getElements();
+        if (elementsArray != null) {
+            for (int i = 0; i < (1 << A.size()); i++) {
+                Set<Integer> subset = new Set<>();
+                for (int j = 0; j < elementsArray.length; j++) {
+                    if ((i & (1 << j)) != 0) {
+                        subset.add((Integer) elementsArray[j]);
+                    }
+                }
+                subsets.add(subset);
+            }
+        }
+        return subsets;
+    }
+
+    private static class Set<E> {
+        private E[] elements;
+        private int size = 0;
+
+        public Set() {
+            elements = (E[]) new Object[0];
+        }
+
+        public boolean add(E e) {
+            if (!contains(e)) {
+                if (size == elements.length) {
+                    elements = Arrays.copyOf(elements, elements.length == 0 ? 1 : elements.length * 2);
+                }
+                elements[size] = e;
+                size++;
+                return true;
+            }
+            return false;
+        }
+
+        public boolean contains(E e) {
+            for (int i = 0; i < size; i++) {
+                if (elements[i].equals(e)) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public int size() {
+            return size;
+        }
+
+        public E[] getElements() {
+            return elements;
+        }
+
+        @Override
+        public String toString() {
+            StringBuilder sb = new StringBuilder();
+            sb.append("[");
+            for (int i = 0; i < size; i++) {
+                sb.append(elements[i]);
+                if (i < size - 1) sb.append(", ");
+            }
+            sb.append("]");
+            return sb.toString();
+        }
+    }
+
+
+    public static void main(String[] args) {
+        Set<Integer> A = new Set<>();
+        Scanner scanner = new Scanner(System.in);
+
+        int n = 0;
+        int x = 0;
+        System.out.println("How many numbers do you want to add? (1-4)");
+        n = scanner.nextInt();
+
+        switch (n) {
+            case 1:
+                System.out.println("What is the number?");
+                x = scanner.nextInt();
+                A.add(x);
+                break;
+            case 2:
+                System.out.println("What is the First number?");
+                x = scanner.nextInt();
+                A.add(x);
+                System.out.println("What is the Second number?");
+                x = scanner.nextInt();
+                A.add(x);
+                break;
+            case 3:
+                System.out.println("What is the First number?");
+                x = scanner.nextInt();
+                A.add(x);
+                System.out.println("What is the Second number?");
+                x = scanner.nextInt();
+                A.add(x);
+                System.out.println("What is the Third number?");
+                x = scanner.nextInt();
+                A.add(x);
+                break;
+            case 4:
+                System.out.println("What is the First number?");
+                x = scanner.nextInt();
+                A.add(x);
+                System.out.println("What is the Second number?");
+                x = scanner.nextInt();
+                A.add(x);
+                System.out.println("What is the Third number?");
+                x = scanner.nextInt();
+                A.add(x);
+                System.out.println("What is the Fourth number?");
+                x = scanner.nextInt();
+                A.add(x);
+                break;
+            default:
+                System.out.println("The number of elements must be between 1 and 4.");
+                return;
+        }
+
+        Solution solution = new Solution();
+        Set<Set<Integer>> result = solution.getSubSets(A);
+        System.out.println(result);
+        scanner.close();
+    }
+}
